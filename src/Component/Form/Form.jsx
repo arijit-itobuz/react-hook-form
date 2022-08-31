@@ -16,9 +16,11 @@ export default function Form() {
       isSubmitting,
       isValidating,
     },
-    reset,
     watch,
+    reset,
+    resetField,
     setValue,
+    getValues,
     trigger,
   } = useForm({
     mode: "onChange", // catch properties onChange
@@ -29,14 +31,15 @@ export default function Form() {
         phone: "1234567890",
         address: "Earth",
         password: "arijit-pass ",
+        checkbox: true
       },
     },
   });
   // console.log('errors', errors);
   // console.log('isValid', isValid);
   // console.log('watch', watch());
-  // console.log('watch', watch('name'));
-  // console.log('watch', watch(['name', 'address']));
+  // console.log('watch', watch('user.checkbox'));
+  // console.log('watch', watch(['user.name', 'user.address']));
   // console.log('isDirty', isDirty);
   // console.log('dirtyFields', dirtyFields);
   // console.log('touchedFields', touchedFields);
@@ -46,13 +49,16 @@ export default function Form() {
   // console.log('isValidating', isValidating);
 
   const onSubmit = (data) => {
-    console.log("data.user", data.user);
+    console.log("onSubmit", data.user);
+  };
+  const onError = (data) => {
+    console.log("onError", data.user);
   };
 
   return (
     <>
       <div className="bg-cyan py-2">
-        <form className="container" onSubmit={handleSubmit(onSubmit)}>
+        <form className="container" onSubmit={handleSubmit(onSubmit, onError)}>
           <input
             type="text"
             placeholder="enter name"
@@ -75,7 +81,7 @@ export default function Form() {
             type="number"
             placeholder="enter phone"
             {...register("user.phone", {
-              valueAsNumber: true,
+              // valueAsNumber: true,
               required: "Phone is required",
               minLength: {
                 value: 10,
@@ -118,6 +124,12 @@ export default function Form() {
           />
           <p className="error-msg">{errors.user?.password?.message}</p>
 
+          {/* Checkbox */}
+          <input
+            type="checkbox"
+            {...register("user.checkbox")}
+          />
+
           {/* Submit */}
           <input
             type="submit"
@@ -134,8 +146,19 @@ export default function Form() {
             onClick={() => reset()}
           />
 
+          {/* Reset Field */}
+          {watch('user.checkbox') && <input
+            type="button"
+            value="Reset Field - Name and Address"
+            className="btn "
+            onClick={() => {
+              resetField("user.name", { keepError: true });
+              resetField("user.address", { keepError: true });
+            }}
+          />}
+
           {/* Set Value */}
-          <input
+          {watch('user.checkbox') && <input
             type="button"
             value="Set Value"
             className="btn btn-reset"
@@ -150,14 +173,25 @@ export default function Form() {
                   phone: "0987654321",
                   address: "Mars",
                   password: "vivek-pass",
+                  checkbox: true
                 },
                 { shouldDirty: true }
               )
             }
-          />
+          />}
+
+          {/* Get Value */}
+          {watch('user.checkbox') && <input
+            type="button"
+            value="Get Values"
+            className="btn btn-reset"
+            onClick={() => {
+              console.log("Get Values", getValues().user);
+            }}
+          />}
 
           {/* Trigger */}
-          <input
+          {watch('user.checkbox') && <input
             type="button"
             value="Trigger"
             className="btn"
@@ -165,7 +199,7 @@ export default function Form() {
               const output = await trigger(["name", "email"]);
               console.log("trigger", output);
             }}
-          />
+          />}
         </form>
       </div>
     </>
