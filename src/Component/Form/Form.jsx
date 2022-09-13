@@ -31,7 +31,7 @@ export default function Form() {
         phone: "1234567890",
         address: "Earth",
         password: "arijit-pass ",
-        checkbox: true
+        checkbox: true,
       },
     },
   });
@@ -125,10 +125,7 @@ export default function Form() {
           <p className="error-msg">{errors.user?.password?.message}</p>
 
           {/* Checkbox */}
-          <input
-            type="checkbox"
-            {...register("user.checkbox")}
-          />
+          <input type="checkbox" {...register("user.checkbox")} />
 
           {/* Submit */}
           <input
@@ -147,59 +144,67 @@ export default function Form() {
           />
 
           {/* Reset Field */}
-          {watch('user.checkbox') && <input
-            type="button"
-            value="Reset Field - Name and Address"
-            className="btn "
-            onClick={() => {
-              resetField("user.name", { keepError: true });
-              resetField("user.address", { keepError: true });
-            }}
-          />}
+          {watch("user.checkbox") && (
+            <input
+              type="button"
+              value="Reset Field - Name and Address"
+              className="btn "
+              onClick={() => {
+                resetField("user.name", { keepError: true });
+                resetField("user.address", { keepError: true });
+              }}
+            />
+          )}
 
           {/* Set Value */}
-          {watch('user.checkbox') && <input
-            type="button"
-            value="Set Value"
-            className="btn btn-reset"
-            // onClick={() => setValue('user.name', 'Divya Jain', { shouldDirty: true })}
-            onClick={() =>
-              setValue(
-                "user",
-                {
-                  // not recommend way
-                  name: "Vivek Jain",
-                  email: "vivek@yahoo.com",
-                  phone: "0987654321",
-                  address: "Mars",
-                  password: "vivek-pass",
-                  checkbox: true
-                },
-                { shouldDirty: true }
-              )
-            }
-          />}
+          {watch("user.checkbox") && (
+            <input
+              type="button"
+              value="Set Value"
+              className="btn btn-reset"
+              // onClick={() => setValue('user.name', 'Divya Jain', { shouldDirty: true })}
+              onClick={() =>
+                setValue(
+                  "user",
+                  {
+                    // not recommend way
+                    name: "Vivek Jain",
+                    email: "vivek@yahoo.com",
+                    phone: "0987654321",
+                    address: "Mars",
+                    password: "vivek-pass",
+                    checkbox: true,
+                  },
+                  { shouldDirty: true }
+                )
+              }
+            />
+          )}
 
           {/* Get Value */}
-          {watch('user.checkbox') && <input
-            type="button"
-            value="Get Values"
-            className="btn btn-reset"
-            onClick={() => {
-              console.log("Get Values", getValues().user);
-            }}
-          />}
+          {watch("user.checkbox") && (
+            <input
+              type="button"
+              value="Get Values"
+              className="btn btn-reset"
+              onClick={() => {
+                console.log("Get Values", getValues().user);
+              }}
+            />
+          )}
 
           {/* Trigger */}
-          {watch('user.checkbox') && <input
-            type="button"
-            value="Trigger"
-            className="btn"
-            onClick={async () => {
-              const output = await trigger(["name", "email"]);
-              console.log("trigger", output);
-            }}
-          />}
+          {watch("user.checkbox") && (
+            <input
+              type="button"
+              value="Trigger"
+              className="btn"
+              onClick={async () => {
+                const output = await trigger(["name", "email"]);
+                console.log("trigger", output);
+              }}
+            />
+          )}
         </form>
       </div>
     </>
