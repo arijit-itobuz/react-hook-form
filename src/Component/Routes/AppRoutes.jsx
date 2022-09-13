@@ -1,13 +1,13 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
-import Form from '../Form/Form';
+import UseForm from '../Form/UseForm';
 import UseFieldArray from '../Form/UseFieldArray';
 
 export default function AppRoutes() {
   return (
     <>
       <Routes>
-        <Route path='/form' element={<Form />} />
+        <Route path='/useForm' element={<UseForm />} />
         <Route path='/useFieldArray' element={<UseFieldArray />} />
       </Routes>
     </>
