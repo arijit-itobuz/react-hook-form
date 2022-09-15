@@ -15,9 +15,9 @@ export default function UseFieldArray() {
           console.log(data);
         })}
       >
-        {fields.map(({ id }, index) => {
+        {fields.map((field, index) => {
           return (
-            <div key={id} className={`container`}>
+            <div key={field.id} className={`container`}>
               <input {...register(`items[${index}].name`)} />
               <select {...register(`items[${index}].type`)}>
                 <option value="">Select</option>
